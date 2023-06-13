@@ -1,5 +1,6 @@
 import pygame
 from game.utils.constants import SPACESHIP,SCREEN_WIDTH
+
 class Spaceship:
     width_spaceship = 40
     height_spaceship = 60
