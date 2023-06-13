@@ -1,6 +1,8 @@
 import pygame
 from game.utils.constants import SPACESHIP,SCREEN_WIDTH
 class Spaceship:
+    width_spaceship = 40
+    height_spaceship = 60
     X_POS = (SCREEN_WIDTH // 2) - 40
     Y_POS = 500
     def __init__(self):
@@ -25,18 +27,22 @@ class Spaceship:
         
 
     def move_left(self):
-        if self.rect.left > 0:
-            self.rect.x -= 10
-        elif self.rect.x == 0:
+        self.rect.x -= 10
+        if self.rect.x == 0:
             self.rect.x = SCREEN_WIDTH
+
+
     def move_right(self):
-        if self.rect.right < SCREEN_WIDTH:
-            self.rect.x += 10
-        elif self.rect.x == 1060:
+        self.rect.x += 10
+        if self.rect.x == (SCREEN_WIDTH - self.width_spaceship):
             self.rect.x = 0
+
+
     def move_up(self):
-        if self.rect.y > 0:
+        if self.rect.y > (self.X_POS // 2)  :
             self.rect.y -= 10
+
+
     def move_down(self):
-        if self.rect.y < 500:
+        if self.rect.y < self.X_POS :
             self.rect.y += 10
