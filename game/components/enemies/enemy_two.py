@@ -2,17 +2,13 @@ import pygame
 from game.components.enemies.enemy import Enemy
 from game.utils.constants import ENEMY_2
 
-class Ship_two(Enemy):
+class EnemyTwo(Enemy):
     WIDTH = 40
     HEIGTH = 60
-    
+    SPEED_X = 6
+    SPEED_Y = 2
     
     def __init__(self):
-        self.image = self.Enemi()
+        self.image = ENEMY_2
         self.image = pygame.transform.scale(self.image,(self.WIDTH,self.HEIGTH))
         super().__init__(self.image)
-
-    def Enemi(self):
-        self.SPEED_X = 6
-        self.SPEED_Y = 5
-        return ENEMY_2
