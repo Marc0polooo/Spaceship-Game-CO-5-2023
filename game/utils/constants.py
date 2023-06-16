@@ -29,5 +29,10 @@ ENEMY_1 = pygame.image.load(os.path.join(IMG_DIR, "Enemy/enemy_1.png"))
 ENEMY_2 = pygame.image.load(os.path.join(IMG_DIR, "Enemy/enemy_2.png"))
 ENEMY_3 = pygame.image.load(os.path.join(IMG_DIR, "Enemy/file.jpg"))
 
+BLACK_COLOR = (0,0,0)
+WHITE_COLOR = (255,255,255)
+RED_COLOR = (255,0,0)
+
 FONT_STYLE = 'freesansbold.ttf'
 BULLET_ENEMY_TYPE = 'enemy'
+BULLET_TYPE = 'player'

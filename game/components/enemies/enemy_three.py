@@ -1,6 +1,6 @@
-import pygame,random
+import pygame
 from game.components.enemies.enemy import Enemy
-from game.utils.constants import ENEMY_3,SCREEN_WIDTH
+from game.utils.constants import ENEMY_3
 
 class EnemyThree(Enemy):
 
