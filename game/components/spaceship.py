@@ -6,7 +6,7 @@ class Spaceship:
     height_spaceship = 60
     X_POS = (SCREEN_WIDTH // 2) - 40
     Y_POS = 500
-    
+    SHOOTING_TIME = 16
     def __init__(self):
         self.image = SPACESHIP 
         self.image = pygame.transform.scale(self.image,(40,60))
@@ -14,9 +14,11 @@ class Spaceship:
         self.rect.x = self.X_POS
         self.rect.y = self.Y_POS
         self.is_alive = True
-        self.max_score = 0
+        self.shooting_time = 0
+
         
     def update(self,user_input,bullet_handler):
+        self.shooting_time += 1
         if user_input[pygame.K_LEFT] or user_input[pygame.K_a]:
             self.move_left()
         if user_input[pygame.K_RIGHT] or user_input[pygame.K_d]:
@@ -25,7 +27,7 @@ class Spaceship:
             self.move_up()
         if user_input[pygame.K_DOWN] or user_input[pygame.K_s]:
             self.move_down()
-        if user_input[pygame.K_SPACE] or user_input[pygame.MOUSEBUTTONDOWN]:
+        if user_input[pygame.K_SPACE] and (self.shooting_time % self.SHOOTING_TIME == 0):
             self.shoot(bullet_handler)
 
 
@@ -57,7 +59,8 @@ class Spaceship:
             self.rect.y += 10
     
     def shoot(self,bullet_handler):
-        bullet_handler.add_bullet(BULLET_TYPE, self.rect.center)
+        
+            bullet_handler.add_bullet(BULLET_TYPE, self.rect.center)
 
 
     def reset (self):
