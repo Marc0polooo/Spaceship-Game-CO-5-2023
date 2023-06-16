@@ -86,14 +86,14 @@ class Game:
             self.screen.blit(text,text_rect)
         else:
 
-            # if self.max_score < self.score:
-            #     self.max_score = self.score
+            if self.max_score < self.score:
+                self.max_score = self.score
             text,text_rect = text_utils.get_message("press Any Key to Restar",30,WHITE_COLOR)
             score,score_rect = text_utils.get_message(f"your score is: {self.score}",30,WHITE_COLOR,height= SCREEN_HEIGHT//2 +50)
-            # number_death,number_death_rect = text_utils.get_message(f"you have died {self.number_death} times",30,WHITE_COLOR,height= SCREEN_HEIGHT//2 +100)
-            # max_score,max_score_rect = text_utils.get_message(f"your max score is :{self.max_score}",30,RED_COLOR,height= SCREEN_HEIGHT//2 - 50)
-            # self.screen.blit(max_score,max_score_rect)
-            # self.screen.blit(number_death,number_death_rect)
+            number_death,number_death_rect = text_utils.get_message(f"you have died {self.number_death} times",30,WHITE_COLOR,height= SCREEN_HEIGHT//2 +100)
+            max_score,max_score_rect = text_utils.get_message(f"your max score is :{self.max_score}",30,RED_COLOR,height= SCREEN_HEIGHT//2 - 50)
+            self.screen.blit(max_score,max_score_rect)
+            self.screen.blit(number_death,number_death_rect)
             self.screen.blit(text,text_rect)
             self.screen.blit(score,score_rect)
             
