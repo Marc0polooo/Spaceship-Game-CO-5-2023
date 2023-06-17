@@ -1,9 +1,10 @@
 import pygame
 
-from game.utils.constants import BG, ICON, SCREEN_HEIGHT, SCREEN_WIDTH, TITLE, FPS, WHITE_COLOR, RED_COLOR
+from game.utils.constants import BG, ICON, SCREEN_HEIGHT, SCREEN_WIDTH, TITLE, FPS, WHITE_COLOR, GOLD_COLOR,DEFAULT_TYPE
 from game.components.spaceship import Spaceship
 from game.components.enemies.enemy_handler import EnemyHandler
 from game.components.bullets.bullet_handler import BulletHandler
+from game.components.powers.power_handler import PowerHandler
 from game.components import text_utils
 
 class Game:
@@ -24,6 +25,8 @@ class Game:
         self.score = 0
         self.number_death = 0
         self.max_score = 0
+        self.power_handler = PowerHandler()
+
 
     def run(self):
         # Game loop: events - update - draw
@@ -51,8 +54,9 @@ class Game:
             self.enemy_handler.update(self.bullet_handler)
             self.bullet_handler.update(self.player,self.enemy_handler.enemies)
             self.score = self.enemy_handler.number_enemy_destroyed
+            self.power_handler.update(self.player)
             if not self.player.is_alive:
-                pygame.time.delay(500)
+                pygame.time.delay(1000)
                 self.playing = False
                 self.number_death += 1
                 
@@ -64,7 +68,9 @@ class Game:
             self.player.draw(self.screen)
             self.enemy_handler.draw(self.screen)
             self.bullet_handler.draw(self.screen)
+            self.power_handler.draw(self.screen)
             self.draw_score()
+            self.draw_power_time()
         else:
             self.draw_menu()
         pygame.display.update()
@@ -91,7 +97,7 @@ class Game:
             text,text_rect = text_utils.get_message("press Any Key to Restar",30,WHITE_COLOR)
             score,score_rect = text_utils.get_message(f"your score is: {self.score}",30,WHITE_COLOR,height= SCREEN_HEIGHT//2 +50)
             number_death,number_death_rect = text_utils.get_message(f"you have died {self.number_death} times",30,WHITE_COLOR,height= SCREEN_HEIGHT//2 +100)
-            max_score,max_score_rect = text_utils.get_message(f"your score record is : {self.max_score}",30,RED_COLOR,height= SCREEN_HEIGHT//2 - 50)
+            max_score,max_score_rect = text_utils.get_message(f"your score record is : {self.max_score}",30,GOLD_COLOR,height= SCREEN_HEIGHT//2 - 50)
             self.screen.blit(max_score,max_score_rect)
             self.screen.blit(number_death,number_death_rect)
             self.screen.blit(text,text_rect)
@@ -102,6 +108,18 @@ class Game:
     def draw_score(self):
         score, score_rect = text_utils.get_message(f"Your score is {self.score}", 20, WHITE_COLOR, 1000, 40)
         self.screen.blit(score, score_rect)
+
+    def draw_power_time(self):
+        if self.player.has_power:
+            power_time = round((self.player.power_time - pygame.time.get_ticks())/1000,1)
+            if power_time >= 0:
+                text,text_rect = text_utils.get_message(f"{self.player.power_type.capitalize()} is enable for : {power_time} ",15,WHITE_COLOR,150,50)
+                self.screen.blit(text,text_rect)
+            else:
+                self.player.has_power = False
+                self.player.power_type = DEFAULT_TYPE
+                self.player.set_default_image()
+            
 
     def reset(self):
         self.player.reset()

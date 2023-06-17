@@ -1,5 +1,5 @@
 import pygame
-from game.utils.constants import SPACESHIP,SCREEN_WIDTH,BULLET_TYPE
+from game.utils.constants import SPACESHIP,SCREEN_WIDTH,BULLET_TYPE,DEFAULT_TYPE
 
 class Spaceship:
     width_spaceship = 40
@@ -15,6 +15,9 @@ class Spaceship:
         self.rect.y = self.Y_POS
         self.is_alive = True
         self.shooting_time = 0
+        self.power_type = DEFAULT_TYPE
+        self.has_power = False
+        self.power_time = 0
 
         
     def update(self,user_input,bullet_handler):
@@ -27,7 +30,7 @@ class Spaceship:
             self.move_up()
         if user_input[pygame.K_DOWN] or user_input[pygame.K_s]:
             self.move_down()
-        if user_input[pygame.K_SPACE] and (self.shooting_time % self.SHOOTING_TIME == 0):
+        if user_input[pygame.K_SPACE] :
             self.shoot(bullet_handler)
 
 
@@ -59,9 +62,16 @@ class Spaceship:
             self.rect.y += 10
     
     def shoot(self,bullet_handler):
-        
+        if self.shooting_time % self.SHOOTING_TIME == 0:
             bullet_handler.add_bullet(BULLET_TYPE, self.rect.center)
 
+    def set_power_image(self,image):
+        self.image = image 
+        self.image = pygame.transform.scale(self.image,(50,70))
+
+    def set_default_image(self):
+        self.image = SPACESHIP 
+        self.image = pygame.transform.scale(self.image,(40,60))
 
     def reset (self):
         self.rect.x = self.X_POS
