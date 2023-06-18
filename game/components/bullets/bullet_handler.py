@@ -11,8 +11,7 @@ class BulletHandler:
         
 
     def update(self, player, enemies):
-        # if player.power_type == HEAVY_TYPE:
-        #     MyBullet.power_up(self)
+            
         for bullet in self.bullets:
             if not bullet.is_active:
                 self.remove_bullet(bullet)
@@ -21,7 +20,7 @@ class BulletHandler:
                     bullet.update(player)
                 else:
                     for enemy in enemies:
-                        bullet.update(enemy)
+                        bullet.update(player,enemy)
 
 
     def draw(self, screen):

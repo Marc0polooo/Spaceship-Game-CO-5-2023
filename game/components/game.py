@@ -1,4 +1,5 @@
 import pygame
+import pygame.mixer
 
 from game.utils.constants import BG, ICON, SCREEN_HEIGHT, SCREEN_WIDTH, TITLE, FPS, WHITE_COLOR, GOLD_COLOR,BUTTON_PLAY,DEFAULT_TYPE
 from game.components.spaceship import Spaceship
@@ -26,6 +27,12 @@ class Game:
         self.number_death = 0
         self.max_score = 0
         self.power_handler = PowerHandler()
+        self.sound = pygame.mixer.Sound("game/assets/music/teme.wav")
+        self.sound.play(-1)
+        self.sound.set_volume(1)
+        self.sound_death = None
+        self.play_button = None
+
 
     def run(self):
         # Game loop: events - update - draw
@@ -43,10 +50,10 @@ class Game:
             if event.type == pygame.QUIT:
                 self.running = False
                 self.playing = False
-            elif event.type == pygame.KEYDOWN and not self.playing:
-                self.playing = True
-                self.reset()
-
+            elif event.type == pygame.MOUSEBUTTONDOWN and not self.playing:
+                mousepos = pygame.mouse.get_pos()
+                self.button_pos(mousepos)
+               
     def update(self):
         if self.playing:
             user_input = pygame.key.get_pressed()
@@ -56,7 +63,10 @@ class Game:
             self.score = self.enemy_handler.number_enemy_destroyed
             self.power_handler.update(self.player)
             if not self.player.is_alive:
-                pygame.time.delay(1000)
+                self.sound_death = pygame.mixer.Sound("game/assets/music/death.wav")
+                self.sound_death.play()
+                self.sound.set_volume(1)
+                pygame.time.delay(1500)
                 self.playing = False
                 self.number_death += 1
                 
@@ -90,22 +100,29 @@ class Game:
         if self.number_death == 0:
             play,play_rect = text_utils.get_image(BUTTON_PLAY)
             self.screen.blit(play,play_rect)
-            
+            self.play_button = play_rect
             # text,text_rect = text_utils.get_message("press Any Key to star",30,WHITE_COLOR)
             # self.screen.blit(text,text_rect)
         else:
 
             if self.max_score < self.score:
                 self.max_score = self.score
-            text,text_rect = text_utils.get_message("press Any Key to Restar",30,WHITE_COLOR)
-            score,score_rect = text_utils.get_message(f"your score is: {self.score}",30,WHITE_COLOR,height= SCREEN_HEIGHT//2 +50)
+            play,play_rect = text_utils.get_image(BUTTON_PLAY)
+            self.screen.blit(play,play_rect)
+            score,score_rect = text_utils.get_message(f"your score is: {self.score}",30,WHITE_COLOR,width= 200,height=20)
             number_death,number_death_rect = text_utils.get_message(f"you have died {self.number_death} times",30,WHITE_COLOR,height= SCREEN_HEIGHT//2 +100)
             max_score,max_score_rect = text_utils.get_message(f"your score record is : {self.max_score}",30,GOLD_COLOR,height= SCREEN_HEIGHT//2 - 50)
             self.screen.blit(max_score,max_score_rect)
             self.screen.blit(number_death,number_death_rect)
-            self.screen.blit(text,text_rect)
             self.screen.blit(score,score_rect)
             
+
+
+    def button_pos(self,mousepos):
+        if self.play_button.collidepoint(mousepos):
+            self.playing = True
+            self.reset()
+
 
 
     def draw_score(self):

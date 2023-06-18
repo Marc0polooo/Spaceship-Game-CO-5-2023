@@ -17,13 +17,13 @@ class MyBullet(Bullet):
         self.rect.center = center
         self.is_active = True
 
-    def update(self,enemy):
+    def update(self,player,enemy):
         self.rect.y -= self.SPEED
-        #if player.power_type == HEAVY_TYPE:
-        #     WIDTH = 30
-        #     HEIGTH = 34
-        #     self.image = DOBLE_BULLET
-        #     self.image = pygame.transform.scale(self.image, (WIDTH, HEIGTH))
+        if player.power_type == HEAVY_TYPE:
+            WIDTH = 30
+            HEIGTH = 34
+            self.image = DOBLE_BULLET
+            self.image = pygame.transform.scale(self.image, (WIDTH, HEIGTH))
             
         if self.rect.y <= 0:
             self.is_active = False

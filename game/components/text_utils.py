@@ -13,7 +13,7 @@ def get_message(message,size,color,width = SCREEN_WIDTH //2 ,height = SCREEN_HEI
 
 def get_image(image,width = SCREEN_WIDTH //2 ,height = SCREEN_HEIGHT // 2):
     play = image
-    play  = pygame.transform.scale(play,(150,50))
+    play  = pygame.transform.scale(play,(200,70))
     rect = play.get_rect()
     rect.center = (width,height)
     return play, rect
