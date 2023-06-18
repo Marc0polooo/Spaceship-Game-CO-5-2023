@@ -3,12 +3,14 @@ from game.utils.constants import SCREEN_WIDTH,SCREEN_HEIGHT,BULLET_ENEMY_TYPE
 class Enemy:
     X_POST_LIST = [50,100,150,200,250,300,350,400,450,500,550,600,650,700]
     Y_POS = 20
-    SPEED_X = 5
-    SPEED_Y = 1
+    
+    
     LEFT = 'left'
     RIGHT = 'right'
     MOV_X = [LEFT,RIGHT]
     INTERVAL = 100
+    SPEED_X = 5
+    SPEED_Y = 1
     SHOOTING_TIME = 30
 
     def __init__(self,image):
@@ -21,13 +23,18 @@ class Enemy:
         self.is_alive = True
         self.is_destroyed = False
         self.shooting_time = 0
+        self.level_dificulty = 0
+        self.time_dificuty = 0
+       
 
     def update(self,bullet_handler):
         if self.rect.y >= SCREEN_HEIGHT:
             self.is_alive = False
         self.shooting_time += 1
+        self.time_dificuty += 1
         self.move()
         self.shoot(bullet_handler)
+        self.leve_up_dificulty()
 
     def draw(self,screen):
         screen.blit(self.image,self.rect)
@@ -47,6 +54,13 @@ class Enemy:
                 self.mov_x = self.LEFT
                 self.index = 0
         self.index += 1
+
+    def leve_up_dificulty(self):
+        
+        if self.time_dificuty == 30 and self.SPEED_X < 50 :
+            self.time_dificuty = 0
+            self.SPEED_X += 3
+
 
     def shoot(self,bullet_handler):
         if self.shooting_time % self.SHOOTING_TIME == 0:

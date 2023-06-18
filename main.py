@@ -9,3 +9,5 @@ if __name__ == "__main__":
     #balas direcciones diferentes
     #jefe
     #poder de balas dobles
+
+           

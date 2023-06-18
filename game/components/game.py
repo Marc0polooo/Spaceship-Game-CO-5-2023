@@ -1,6 +1,6 @@
 import pygame
 
-from game.utils.constants import BG, ICON, SCREEN_HEIGHT, SCREEN_WIDTH, TITLE, FPS, WHITE_COLOR, GOLD_COLOR,DEFAULT_TYPE
+from game.utils.constants import BG, ICON, SCREEN_HEIGHT, SCREEN_WIDTH, TITLE, FPS, WHITE_COLOR, GOLD_COLOR,BUTTON_PLAY,DEFAULT_TYPE
 from game.components.spaceship import Spaceship
 from game.components.enemies.enemy_handler import EnemyHandler
 from game.components.bullets.bullet_handler import BulletHandler
@@ -16,7 +16,7 @@ class Game:
         self.clock = pygame.time.Clock()
         self.playing = False
         self.running = False
-        self.game_speed = 10
+        self.game_speed = 5
         self.x_pos_bg = 0
         self.y_pos_bg = 0
         self.player = Spaceship()
@@ -26,7 +26,6 @@ class Game:
         self.number_death = 0
         self.max_score = 0
         self.power_handler = PowerHandler()
-
 
     def run(self):
         # Game loop: events - update - draw
@@ -40,6 +39,7 @@ class Game:
 
     def events(self):
         for event in pygame.event.get():
+
             if event.type == pygame.QUIT:
                 self.running = False
                 self.playing = False
@@ -88,8 +88,11 @@ class Game:
 
     def draw_menu(self):
         if self.number_death == 0:
-            text,text_rect = text_utils.get_message("press Any Key to star",30,WHITE_COLOR)
-            self.screen.blit(text,text_rect)
+            play,play_rect = text_utils.get_image(BUTTON_PLAY)
+            self.screen.blit(play,play_rect)
+            
+            # text,text_rect = text_utils.get_message("press Any Key to star",30,WHITE_COLOR)
+            # self.screen.blit(text,text_rect)
         else:
 
             if self.max_score < self.score:
@@ -119,9 +122,9 @@ class Game:
                 self.player.has_power = False
                 self.player.power_type = DEFAULT_TYPE
                 self.player.set_default_image()
-            
 
     def reset(self):
         self.player.reset()
         self.enemy_handler.reset()
         self.bullet_handler.reset()
+        self.power_handler.reset()
