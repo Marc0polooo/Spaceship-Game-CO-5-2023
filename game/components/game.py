@@ -109,9 +109,9 @@ class Game:
                 self.max_score = self.score
             play,play_rect = text_utils.get_image(BUTTON_PLAY)
             self.screen.blit(play,play_rect)
-            score,score_rect = text_utils.get_message(f"your score is: {self.score}",30,WHITE_COLOR,width= 200,height=20)
-            number_death,number_death_rect = text_utils.get_message(f"you have died {self.number_death} times",30,WHITE_COLOR,height= SCREEN_HEIGHT//2 +100)
-            max_score,max_score_rect = text_utils.get_message(f"your score record is : {self.max_score}",30,GOLD_COLOR,height= SCREEN_HEIGHT//2 - 50)
+            score,score_rect = text_utils.get_message(f"your score is: {self.score}",25,WHITE_COLOR,width= 120,height=20)
+            number_death,number_death_rect = text_utils.get_message(f"you have died {self.number_death} times",25,WHITE_COLOR,width=155,height= 80)
+            max_score,max_score_rect = text_utils.get_message(f"your score record is : {self.max_score}",25,GOLD_COLOR,width=160,height= 50)
             self.screen.blit(max_score,max_score_rect)
             self.screen.blit(number_death,number_death_rect)
             self.screen.blit(score,score_rect)

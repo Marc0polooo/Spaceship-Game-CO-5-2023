@@ -16,6 +16,10 @@ class MyBullet(Bullet):
         self.rect = self.image.get_rect()
         self.rect.center = center
         self.is_active = True
+        self.sound = pygame.mixer.Sound("game/assets/music/shoot.wav")
+        self.sound.play()
+        self.sound.set_volume(0.5)
+
 
     def update(self,player,enemy):
         self.rect.y -= self.SPEED

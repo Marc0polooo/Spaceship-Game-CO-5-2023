@@ -1,7 +1,7 @@
 from game.components.powers.shield import Shield
 from game.components.powers.heavy_machine_gun import HeavyMachineGun
 import random,pygame
-from game.utils.constants import SPACESHIP_SHIELD,SCREEN_HEIGHT, SHIELD_TYPE,HEAVY_TYPE
+from game.utils.constants import SPACESHIP_SHIELD,SCREEN_HEIGHT, SHIELD_TYPE,HEAVY_TYPE,SPACESHIP
 
 class PowerHandler:
     def __init__(self):
@@ -52,7 +52,11 @@ class PowerHandler:
                     self.sound = pygame.mixer.Sound("game/assets/music/heavy.wav")
                     self.sound.play()
                     self.sound.set_volume(0.5)
-                if player.power_type ==  SHIELD_TYPE:
+                    player.set_power_image(SPACESHIP)
+                elif player.power_type ==  SHIELD_TYPE:
+                    self.sound = pygame.mixer.Sound("game/assets/music/shield.wav")
+                    self.sound.play()
+                    self.sound.set_volume(0.5)
                     player.set_power_image(SPACESHIP_SHIELD)
 
     def reset(self):
