@@ -26,7 +26,6 @@ c
 <p align="center" ><img src="game/assets/Spaceship/spaceship_shield.png" width="200" height="200" /></p>
 <p align="center" > inmune a daño durante tiempo limitado </p> 
 <h1 align="center"> SONIDOS </h1>
-<h1 align="center"> powers for spaceship </h1>
 <h3 align="center" >los elementos a los que se le implemento el sonido son <h1>menu</h1><h1>disparo de spaceship</h1><h1>heavymachinegun</h1><h1>shield</h1><h1>muerte</h1> </h3>
 <h1 align="center"> BOSS </h1> 
 <p align="center" > El boss esta inspirado en mi compañero carlos monsalve </p>
