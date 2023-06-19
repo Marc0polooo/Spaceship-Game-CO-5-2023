@@ -24,11 +24,13 @@ BUTTON_PLAY = pygame.image.load(os.path.join(IMG_DIR, 'Other/boton_trans.png'))
 DEFAULT_TYPE = "default"
 SHIELD_TYPE = 'shield'
 HEAVY_TYPE = "heavy"
+HEART_TYPE = "heart"
 
 SPACESHIP = pygame.image.load(os.path.join(IMG_DIR, "Spaceship/spaceship.png"))
 SPACESHIP_SHIELD = pygame.image.load(os.path.join(IMG_DIR, "Spaceship/spaceship_shield.png"))
 BULLET = pygame.image.load(os.path.join(IMG_DIR, "Bullet/bullet_1.png"))
 DOBLE_BULLET = pygame.image.load(os.path.join(IMG_DIR, "Bullet/doble_bullet.png"))
+HEART =  pygame.image.load(os.path.join(IMG_DIR, 'Other/heart.png'))
 
 BULLET_ENEMY = pygame.image.load(os.path.join(IMG_DIR, "Bullet/bullet_2.png"))
 BULLET_1 = pygame.image.load(os.path.join(IMG_DIR, "Bullet/binario_1.png"))

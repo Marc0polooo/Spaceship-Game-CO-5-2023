@@ -1,21 +1,27 @@
 from game.components.powers.shield import Shield
 from game.components.powers.heavy_machine_gun import HeavyMachineGun
+from game.components.powers.power_heart import PowerHeart
 import random,pygame
-from game.utils.constants import SPACESHIP_SHIELD,SCREEN_HEIGHT, SHIELD_TYPE,HEAVY_TYPE,SPACESHIP
+from game.utils.constants import SPACESHIP_SHIELD,SCREEN_HEIGHT, SHIELD_TYPE,HEAVY_TYPE,SPACESHIP, HEART_TYPE
 
 class PowerHandler:
     def __init__(self):
         self.powers = []
         self.when_appers = random.randint(3000,7000)
         self.duration = 0
-        self.random_power = random.randint(1,2)
+        self.random_power = 3 #random.randint(1,4)
         self.sound = None
 
     def generate_power(self):
         if self.random_power == 1:
             power = Shield()
-        else:
+
+        elif self.random_power == 2:
             power = HeavyMachineGun()
+
+        else:
+            power = PowerHeart()
+
         self.powers.append(power)
         self.when_appers += random.randint(3000,7000)
 
@@ -48,6 +54,10 @@ class PowerHandler:
                 player.power_type = power.type  
                 player.has_power = True
                 player.power_time = power.star_time + (self.duration * 1000)
+                if player.power_type == HEART_TYPE:
+                    player.live += 1
+                    player.power_time = "inf"
+
                 if player.power_type == HEAVY_TYPE:
                     self.sound = pygame.mixer.Sound("game/assets/music/heavy.wav")
                     self.sound.play()

@@ -55,3 +55,4 @@ class EnemyHandler:
         self.number_enemy_destroyed = 0
         self.numer_boss = 1
         self.boss = False
+        

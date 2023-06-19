@@ -16,9 +16,10 @@ class EnemyThree(Enemy):
     def __init__(self):
         self.image = ENEMY_3
         self.image = pygame.transform.scale(self.image,(self.WIDTH,self.HEIGTH))
-        self.sound_boss =  pygame.mixer.Sound("game/assets/music/boss.wav")
-        self.sound_boss.play(-1)
-        self.sound_boss.set_volume(2)
+        self.sound = pygame.mixer.music.load("game/assets/music/boss.wav")
+        self.sound = pygame.mixer.music.play()
+        self.sound = pygame.mixer.music.set_volume(2)
+        
         self.move_boss = 300
         self.move_y = self.DOWN
         super().__init__(self.image)
@@ -55,3 +56,7 @@ class EnemyThree(Enemy):
 
     def leve_up_dificulty(self):
         pass
+
+    def retec(self):
+        self.live = 20
+        self.sound = pygame.mixer.music.pause()

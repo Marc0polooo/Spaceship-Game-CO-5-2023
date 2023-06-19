@@ -1,7 +1,7 @@
 import pygame
 import pygame.mixer
 
-from game.utils.constants import BG, ICON, SCREEN_HEIGHT, SCREEN_WIDTH, TITLE, FPS, WHITE_COLOR, GOLD_COLOR,BUTTON_PLAY,DEFAULT_TYPE
+from game.utils.constants import BG, ICON, SCREEN_HEIGHT, SCREEN_WIDTH, TITLE, FPS, WHITE_COLOR, GOLD_COLOR,BUTTON_PLAY,DEFAULT_TYPE,HEART_TYPE
 from game.components.spaceship import Spaceship
 from game.components.enemies.enemy_handler import EnemyHandler
 from game.components.bullets.bullet_handler import BulletHandler
@@ -24,6 +24,7 @@ class Game:
         self.player = Spaceship()
         self.enemy_handler = EnemyHandler()
         self.bullet_handler = BulletHandler()
+        self.boss = EnemyThree()
         self.score = 0
         self.number_death = 0
         self.max_score = 0
@@ -128,7 +129,7 @@ class Game:
         self.screen.blit(score, score_rect)
 
     def draw_power_time(self):
-        if self.player.has_power:
+        if self.player.has_power and not self.player.power_type == HEART_TYPE :
             self.power_time = round((self.player.power_time - pygame.time.get_ticks())/1000,1)
             if self.power_time >= 0:
                 text,text_rect = text_utils.get_message(f"{self.player.power_type.capitalize()} is enable for : {self.power_time} ",15,WHITE_COLOR,150,50)
@@ -144,3 +145,4 @@ class Game:
         self.bullet_handler.reset()
         self.power_handler.reset()
         self.power_time = None
+        self.boss.retec()
