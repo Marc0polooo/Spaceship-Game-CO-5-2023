@@ -1,7 +1,7 @@
 import pygame
 import pygame.mixer
 
-from game.utils.constants import BG, ICON, SCREEN_HEIGHT, SCREEN_WIDTH, TITLE, FPS, WHITE_COLOR, GOLD_COLOR,BUTTON_PLAY,DEFAULT_TYPE,HEART_TYPE,GOLD_LIGHT_COLOR,RED_COLOR
+from game.utils.constants import BG, ICON, SCREEN_HEIGHT, SCREEN_WIDTH, TITLE, FPS, WHITE_COLOR, GOLD_COLOR,BUTTON_PLAY,DEFAULT_TYPE,HEART_TYPE,GOLD_LIGHT_COLOR,RED_COLOR,BACKGROUND_1
 from game.components.spaceship import Spaceship
 from game.components.enemies.enemy_handler import EnemyHandler
 from game.components.bullets.bullet_handler import BulletHandler
@@ -81,8 +81,9 @@ class Game:
                 self.number_death += 1
                 
     def draw(self):
-        self.draw_background()
+        self.bg_draw()
         if self.playing:
+            self.draw_background()
             self.clock.tick(FPS)
             self.player.draw(self.screen)
             self.enemy_handler.draw(self.screen)
@@ -94,6 +95,11 @@ class Game:
             self.draw_menu()
         pygame.display.update()
         pygame.display.flip()
+
+    def bg_draw(self):
+        image = pygame.transform.scale(BACKGROUND_1, (SCREEN_WIDTH, SCREEN_HEIGHT))
+        self.screen.blit(image, (0, 0))
+
 
     def draw_background(self):
         image = pygame.transform.scale(BG, (SCREEN_WIDTH, SCREEN_HEIGHT))
