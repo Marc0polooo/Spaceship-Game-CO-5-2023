@@ -43,7 +43,7 @@ class EnemyHandler:
                 self.enemies.append(EnemyTwo())
             
     def add_boss(self):
-        if self.number_recet_boss == 2 and self.numer_boss == 1:
+        if self.number_recet_boss == 20 and self.numer_boss == 1:
             self.numer_boss += 1
             self.enemies.append(EnemyThree())
 

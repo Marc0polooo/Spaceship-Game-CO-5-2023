@@ -22,7 +22,7 @@ class EnemyThree(Enemy):
         super().__init__(self.image)
         self.time = 0
         self.live = 20
-        self.bullet_x = True
+        self.bullet_x = False
 
     def move(self):
         self.time += 1
