@@ -7,7 +7,7 @@ class PowerHandler:
     def __init__(self):
         self.powers = []
         self.when_appers = random.randint(3000,7000)
-        self.duration = random.randint(1,6)
+        self.duration = 0
         self.random_power = random.randint(1,2)
         self.sound = None
 
@@ -61,4 +61,3 @@ class PowerHandler:
 
     def reset(self):
         self.powers = []
-    

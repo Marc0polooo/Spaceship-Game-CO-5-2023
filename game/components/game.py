@@ -6,6 +6,7 @@ from game.components.spaceship import Spaceship
 from game.components.enemies.enemy_handler import EnemyHandler
 from game.components.bullets.bullet_handler import BulletHandler
 from game.components.powers.power_handler import PowerHandler
+from game.components.enemies.enemy_three import EnemyThree
 from game.components import text_utils
 
 class Game:
@@ -29,10 +30,10 @@ class Game:
         self.power_handler = PowerHandler()
         self.sound = pygame.mixer.Sound("game/assets/music/teme.wav")
         self.sound.play(-1)
-        self.sound.set_volume(1)
+        self.sound.set_volume(0.1)
         self.sound_death = None
         self.play_button = None
-
+        self.power_time = None
 
     def run(self):
         # Game loop: events - update - draw
@@ -74,7 +75,6 @@ class Game:
         self.draw_background()
         if self.playing:
             self.clock.tick(FPS)
-            #self.screen.fill((255, 255, 255))
             self.player.draw(self.screen)
             self.enemy_handler.draw(self.screen)
             self.bullet_handler.draw(self.screen)
@@ -101,8 +101,6 @@ class Game:
             play,play_rect = text_utils.get_image(BUTTON_PLAY)
             self.screen.blit(play,play_rect)
             self.play_button = play_rect
-            # text,text_rect = text_utils.get_message("press Any Key to star",30,WHITE_COLOR)
-            # self.screen.blit(text,text_rect)
         else:
 
             if self.max_score < self.score:
@@ -131,9 +129,9 @@ class Game:
 
     def draw_power_time(self):
         if self.player.has_power:
-            power_time = round((self.player.power_time - pygame.time.get_ticks())/1000,1)
-            if power_time >= 0:
-                text,text_rect = text_utils.get_message(f"{self.player.power_type.capitalize()} is enable for : {power_time} ",15,WHITE_COLOR,150,50)
+            self.power_time = round((self.player.power_time - pygame.time.get_ticks())/1000,1)
+            if self.power_time >= 0:
+                text,text_rect = text_utils.get_message(f"{self.player.power_type.capitalize()} is enable for : {self.power_time} ",15,WHITE_COLOR,150,50)
                 self.screen.blit(text,text_rect)
             else:
                 self.player.has_power = False
@@ -145,3 +143,4 @@ class Game:
         self.enemy_handler.reset()
         self.bullet_handler.reset()
         self.power_handler.reset()
+        self.power_time = None

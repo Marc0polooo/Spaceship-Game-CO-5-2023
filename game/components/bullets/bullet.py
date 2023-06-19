@@ -1,4 +1,4 @@
-
+from game.utils.constants import HEAVY_TYPE
 class Bullet:
     def __init__(self,image,type, center):
         self.image = image
@@ -9,7 +9,11 @@ class Bullet:
 
     def update(self,object):
         if self.rect.colliderect(object.rect):
-            object.is_alive = False
+            if object.power_type == HEAVY_TYPE:
+                object.live -= 2
+            object.live -= 1
+            if object.live <= 0:    
+                object.is_alive = False
             self.is_active = False
         
 

@@ -12,11 +12,12 @@ class EnemyHandler:
         self.enemies = []
         self.number_enemy_destroyed = 0
         self.numer_boss = 1
-
+        self.boss = False
 
     def update(self, bullet_handler):
         self.add_enemy()
         self.add_boss()
+        self.boss_manager()
         for enemy in self.enemies:
             enemy.update(bullet_handler)
             if not enemy.is_alive:
@@ -29,14 +30,22 @@ class EnemyHandler:
 
 
     def add_enemy(self):
-        if len(self.enemies) < 2:
-            self.enemies.append(Ship())
-            self.enemies.append(EnemyTwo())
+        
+            if len(self.enemies) < 2 and not self.boss:
+                self.enemies.append(Ship())
+                self.enemies.append(EnemyTwo())
             
     def add_boss(self):
-        if self.number_enemy_destroyed == 20 and self.numer_boss == 1:
+        if self.number_enemy_destroyed == 2 and self.numer_boss == 1:
             self.numer_boss += 1
             self.enemies.append(EnemyThree())
+
+    def boss_manager(self):
+        for enemy in self.enemies:
+            if  type(enemy) == EnemyThree:
+                self.boss = True
+            elif not type(enemy) == EnemyThree:
+                self.boss = False
 
     def remove_enemy(self, enemy):
         self.enemies.remove(enemy)
@@ -44,4 +53,5 @@ class EnemyHandler:
     def reset(self):
         self.enemies = []
         self.number_enemy_destroyed = 0
-     
+        self.numer_boss = 1
+        self.boss = False

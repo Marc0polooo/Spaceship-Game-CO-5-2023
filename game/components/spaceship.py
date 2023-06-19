@@ -18,6 +18,7 @@ class Spaceship:
         self.power_type = DEFAULT_TYPE
         self.has_power = False
         self.power_time = 0
+        self.live = 2
 
         
     def update(self,user_input,bullet_handler):

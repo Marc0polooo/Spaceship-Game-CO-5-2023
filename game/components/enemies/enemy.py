@@ -25,9 +25,14 @@ class Enemy:
         self.shooting_time = 0
         self.level_dificulty = 0
         self.time_dificuty = 0
-       
+        self.time_move_boss = 0
+        self.live = 1
+        self.power_type = None
+
+
 
     def update(self,bullet_handler):
+        self.time_move_boss += 1
         if self.rect.y >= SCREEN_HEIGHT:
             self.is_alive = False
         self.shooting_time += 1

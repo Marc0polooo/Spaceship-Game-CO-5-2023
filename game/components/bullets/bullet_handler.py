@@ -17,7 +17,7 @@ class BulletHandler:
                 self.remove_bullet(bullet)
             else:
                 if bullet.type == BULLET_ENEMY_TYPE:
-                    bullet.update(player)
+                    bullet.update(player,enemies)
                 else:
                     for enemy in enemies:
                         bullet.update(player,enemy)
