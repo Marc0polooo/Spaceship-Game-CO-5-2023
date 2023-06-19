@@ -1,7 +1,7 @@
 import pygame
 import pygame.mixer
 
-from game.utils.constants import BG, ICON, SCREEN_HEIGHT, SCREEN_WIDTH, TITLE, FPS, WHITE_COLOR, GOLD_COLOR,BUTTON_PLAY,DEFAULT_TYPE,HEART_TYPE
+from game.utils.constants import BG, ICON, SCREEN_HEIGHT, SCREEN_WIDTH, TITLE, FPS, WHITE_COLOR, GOLD_COLOR,BUTTON_PLAY,DEFAULT_TYPE,HEART_TYPE,GOLD_LIGHT_COLOR,RED_COLOR
 from game.components.spaceship import Spaceship
 from game.components.enemies.enemy_handler import EnemyHandler
 from game.components.bullets.bullet_handler import BulletHandler
@@ -35,6 +35,10 @@ class Game:
         self.sound_death = None
         self.play_button = None
         self.power_time = None
+        self.score_boss = 0
+        self.live = 0
+        self.live_boss = 0
+        self.valid = None
 
     def run(self):
         # Game loop: events - update - draw
@@ -58,16 +62,20 @@ class Game:
                
     def update(self):
         if self.playing:
+            self.valid_boss()
             user_input = pygame.key.get_pressed()
             self.player.update(user_input,self.bullet_handler)
             self.enemy_handler.update(self.bullet_handler)
             self.bullet_handler.update(self.player,self.enemy_handler.enemies)
             self.score = self.enemy_handler.number_enemy_destroyed
+            self.score_boss = self.enemy_handler.boss_kill
+            self.live_boss = self.boss.live
             self.power_handler.update(self.player)
+            self.live = self.player.live
             if not self.player.is_alive:
                 self.sound_death = pygame.mixer.Sound("game/assets/music/death.wav")
                 self.sound_death.play()
-                self.sound.set_volume(1)
+                self.sound.set_volume(0.5)
                 pygame.time.delay(1500)
                 self.playing = False
                 self.number_death += 1
@@ -108,12 +116,14 @@ class Game:
                 self.max_score = self.score
             play,play_rect = text_utils.get_image(BUTTON_PLAY)
             self.screen.blit(play,play_rect)
-            score,score_rect = text_utils.get_message(f"your score is: {self.score}",25,WHITE_COLOR,width= 120,height=20)
+            score_boss,score_boss_rect = text_utils.get_message(f"dead bosses is: {self.score_boss}",25,WHITE_COLOR,width= 130,height= 110)
+            score,score_rect = text_utils.get_message(f"your score is: {self.score}",25,WHITE_COLOR,width= 115,height=20)
             number_death,number_death_rect = text_utils.get_message(f"you have died {self.number_death} times",25,WHITE_COLOR,width=155,height= 80)
             max_score,max_score_rect = text_utils.get_message(f"your score record is : {self.max_score}",25,GOLD_COLOR,width=160,height= 50)
             self.screen.blit(max_score,max_score_rect)
             self.screen.blit(number_death,number_death_rect)
             self.screen.blit(score,score_rect)
+            self.screen.blit(score_boss,score_boss_rect)
             
 
 
@@ -125,6 +135,12 @@ class Game:
 
 
     def draw_score(self):
+        if self.valid:
+            live_boss, live_boss_rect = text_utils.get_message(f"boss life max {self.live_boss}", 20,RED_COLOR, 500, 40)
+            self.screen.blit(live_boss, live_boss_rect)
+
+        live, live_rect = text_utils.get_message(f"Your lives {self.live}", 20,GOLD_LIGHT_COLOR, 800, 40)
+        self.screen.blit(live, live_rect)
         score, score_rect = text_utils.get_message(f"Your score is {self.score}", 20, WHITE_COLOR, 1000, 40)
         self.screen.blit(score, score_rect)
 
@@ -139,6 +155,13 @@ class Game:
                 self.player.power_type = DEFAULT_TYPE
                 self.player.set_default_image()
 
+    def valid_boss(self):
+        lista =self.enemy_handler.enemies
+        for enemy in lista :
+            if type(enemy) == EnemyThree:
+                self.valid = True
+            if not type(enemy) == EnemyThree: 
+                self.valid = False
     def reset(self):
         self.player.reset()
         self.enemy_handler.reset()
@@ -146,3 +169,4 @@ class Game:
         self.power_handler.reset()
         self.power_time = None
         self.boss.retec()
+        self.sound.set_volume(0.1)

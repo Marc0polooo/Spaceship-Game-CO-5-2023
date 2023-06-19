@@ -13,6 +13,9 @@ class EnemyHandler:
         self.number_enemy_destroyed = 0
         self.numer_boss = 1
         self.boss = False
+        self.number_recet_boss = 0
+        self.boss_kill = 0
+
 
     def update(self, bullet_handler):
         self.add_enemy()
@@ -21,9 +24,13 @@ class EnemyHandler:
         for enemy in self.enemies:
             enemy.update(bullet_handler)
             if not enemy.is_alive:
+                if type(enemy) == EnemyThree:
+                    self.boss = False
+                    self.number_recet_boss = 0
+                    self.boss_kill += 1
                 self.number_enemy_destroyed += 1
                 self.remove_enemy(enemy)
-
+        self.number_recet_boss = self.number_enemy_destroyed
     def draw(self, screen):
         for enemy in self.enemies:
             enemy.draw(screen)
@@ -36,7 +43,7 @@ class EnemyHandler:
                 self.enemies.append(EnemyTwo())
             
     def add_boss(self):
-        if self.number_enemy_destroyed == 2 and self.numer_boss == 1:
+        if self.number_recet_boss == 2 and self.numer_boss == 1:
             self.numer_boss += 1
             self.enemies.append(EnemyThree())
 

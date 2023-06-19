@@ -9,7 +9,7 @@ class PowerHandler:
         self.powers = []
         self.when_appers = random.randint(3000,7000)
         self.duration = 0
-        self.random_power = 3 #random.randint(1,4)
+        self.random_power = random.randint(1,3)
         self.sound = None
 
     def generate_power(self):
@@ -28,7 +28,7 @@ class PowerHandler:
 
     def update(self,player):
         self.duration = random.randint(1,6)
-        self.random_power = random.randint(1,2)
+        self.random_power = random.randint(1,3)
         current_tipe = pygame.time.get_ticks()
         if len(self.powers) == 0 and current_tipe >= self.when_appers:
             self.generate_power()

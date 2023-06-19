@@ -16,29 +16,29 @@ class EnemyThree(Enemy):
     def __init__(self):
         self.image = ENEMY_3
         self.image = pygame.transform.scale(self.image,(self.WIDTH,self.HEIGTH))
-        self.sound = pygame.mixer.music.load("game/assets/music/boss.wav")
-        self.sound = pygame.mixer.music.play()
-        self.sound = pygame.mixer.music.set_volume(2)
         
         self.move_boss = 300
         self.move_y = self.DOWN
         super().__init__(self.image)
         self.time = 0
         self.live = 20
-
+        self.bullet_x = True
 
     def move(self):
         self.time += 1
-
         if  self.time >= self.move_boss  and self.move_y == self.DOWN :
+            self.bullet_x = True
             self.rect.y += self.SPEED_Y
+            
             if self.rect.y >= SCREEN_HEIGHT - self.HEIGTH:
                 self.move_y = self.UP
 
         elif self.move_y == self.UP:
             self.rect.y -= self.SPEED_Y
+            self.bullet_x = True
             if self.rect.y  <= 10:
                 self.rect.y = self.rect.y
+                self.bullet_x = False
                 self.move_y =  self.DOWN
                 self.time = 0
 
@@ -59,4 +59,3 @@ class EnemyThree(Enemy):
 
     def retec(self):
         self.live = 20
-        self.sound = pygame.mixer.music.pause()
